@@ -1,0 +1,4 @@
+#!/bin/bash
+
+hostip=`docker inspect -f {{.NetworkSettings.IPAddress}} dockers_mysql_1`
+mysql -h $hostip -u root -p
