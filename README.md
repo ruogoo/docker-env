@@ -20,7 +20,7 @@ Docker for Production Environment.
 
 1. You can add any nginx config file named with `.conf` suffix to `nginx/conf.d` folder
 
-2. And you should add shared volumns in `docker-compose.yml`
+2. And you should add shared volumes in `docker-compose.yml`
 
 3. Then restart the container.
 
