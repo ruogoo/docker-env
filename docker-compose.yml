@@ -14,6 +14,7 @@ phpfpm:
     links:
       - "mysql"
       - "memcached"
+      - "redis"
 
 mysql:
     build: ./mysql
@@ -23,3 +24,13 @@ mysql:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - ~/dockers/data/mysql:/var/lib/mysql
+
+memcached:
+    build: ./memcached
+    ports:
+      - "11211:11211"
+
+redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
