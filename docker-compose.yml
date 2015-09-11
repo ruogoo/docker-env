@@ -1,3 +1,10 @@
+nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
 mysql:
     build: ./mysql
     ports:
