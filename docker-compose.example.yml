@@ -23,7 +23,8 @@ mysql:
     environment:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      - ~/dockers/data/mysql:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./data/mysql:/var/lib/mysql
 
 memcached:
     build: ./memcached
