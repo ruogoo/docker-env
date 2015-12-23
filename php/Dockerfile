@@ -27,25 +27,16 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         && docker-php-ext-install mcrypt \
         && docker-php-ext-install pdo_mysql
 
-RUN pecl install memcached && echo "extension=memcached.so" > /usr/local/etc/php/conf.d/memcached.ini
-RUN pecl install redis && echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
-RUN pecl install memcache && echo "extension=memcache.so" > /usr/local/etc/php/conf.d/memcache.ini
-RUN pecl install imagick && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini
-RUN pecl install xdebug && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so" > /usr/local/etc/php/conf.d/xdebug.ini
+RUN pecl install imagick-beta && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini
         
 
 # PHP config
 
 ADD php-fpm.conf /usr/local/etc/php-fpm.conf
 
-# Composer
-ADD http://getcomposer.org/composer.phar /usr/local/bin/composer
-RUN chmod 755 /usr/local/bin/composer
-
 # User Permission
 
 RUN useradd -M -s /usr/sbin/nologin webuser
-RUN usermod -u 1000 webuser
 
 RUN mkdir /docker
 RUN chown -R webuser.webuser /docker
