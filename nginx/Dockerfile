@@ -14,6 +14,6 @@ RUN chown -R webuser.webuser /docker
 
 WORKDIR /docker
 
-EXPOSE 80
+EXPOSE 80 443
 
 VOLUME ["/docker"]

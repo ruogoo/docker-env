@@ -6,6 +6,8 @@ nginx:
       - "phpfpm"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./data/log/nginx:/var/log/nginx
+      - ~/code:/docker/code
 
 phpfpm:
     build: ./php
@@ -15,6 +17,8 @@ phpfpm:
       - "mysql"
       - "memcached"
       - "redis"
+    volumes:
+      - ~/code:/docker/code
 
 mysql:
     build: ./mysql
