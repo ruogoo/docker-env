@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5.6
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
