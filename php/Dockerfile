@@ -36,10 +36,10 @@ ADD php-fpm.conf /usr/local/etc/php-fpm.conf
 
 # User Permission
 
-RUN useradd -M -s /usr/sbin/nologin webuser
+RUN useradd -M -s /usr/sbin/nologin docker
 
 RUN mkdir /docker
-RUN chown -R webuser.webuser /docker
+RUN chown -R docker.docker /docker
 WORKDIR /docker
 
 EXPOSE 9000

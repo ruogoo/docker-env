@@ -6,11 +6,11 @@ MAINTAINER HyanCat <hyancat@live.cn>
 ADD nginx.conf /etc/nginx/nginx.conf
 
 # User Permission
-RUN useradd -M -s /usr/sbin/nologin webuser
+RUN useradd -M -s /usr/sbin/nologin docker
 
 RUN mkdir /docker && mkdir /docker/app
 RUN echo "<h1>Hello Docker !</h1>" > /docker/app/index.html
-RUN chown -R webuser.webuser /docker
+RUN chown -R docker.docker /docker
 
 WORKDIR /docker
 
