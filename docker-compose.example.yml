@@ -39,3 +39,5 @@ redis:
     build: ./redis
     ports:
       - "6379:6379"
+    environment:
+      REDIS_PORT: 6379
