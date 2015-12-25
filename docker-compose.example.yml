@@ -6,6 +6,7 @@ nginx:
       - "phpfpm"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
       - ./data/log/nginx:/var/log/nginx
       - ~/app:/docker/app
 
