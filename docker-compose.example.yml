@@ -8,7 +8,7 @@ nginx:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
       - ./data/log/nginx:/var/log/nginx
-      - ~/app:/docker/app
+      - /docker:/docker
 
 phpfpm:
     build: ./php
@@ -19,7 +19,7 @@ phpfpm:
       - "memcached"
       - "redis"
     volumes:
-      - ~/app:/docker/app
+      - /docker:/docker
 
 mysql:
     build: ./mysql
