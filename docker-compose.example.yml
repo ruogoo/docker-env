@@ -8,7 +8,7 @@ nginx:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
       - ./data/log/nginx:/var/log/nginx
-      - /docker:/docker
+      - /docker/app:/docker/app
 
 phpfpm:
     build: ./php
@@ -16,10 +16,9 @@ phpfpm:
       - "9000:9000"
     links:
       - "mysql"
-      - "memcached"
-      - "redis"
     volumes:
-      - /docker:/docker
+      - ./data/log/php:/var/log/php
+      - /docker/app:/docker/app
 
 mysql:
     build: ./mysql
@@ -42,3 +41,12 @@ redis:
       - "6379:6379"
     environment:
       REDIS_PORT: 6379
+
+mongo:
+    build: ./mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_PORT: 27017
+    volumes:
+      - ./data/mongodb:/data/db
