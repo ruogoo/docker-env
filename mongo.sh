@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it dockerproduction_mongo_1 mongo
+docker exec -it dockerintegration_mongo_1 mongo

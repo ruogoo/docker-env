@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker exec -it dockerproduction_mysql_1 mysql -uroot -p
+docker exec -it dockerintegration_mysql_1 mysql -uroot -p
