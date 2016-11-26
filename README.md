@@ -1,5 +1,5 @@
 # Docker-Production
-Docker for Production Environment.
+Docker deployment for development and production.
 
 - Nginx
 - PHP
