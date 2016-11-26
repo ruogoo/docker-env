@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:rc-fpm
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
@@ -29,7 +29,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         && docker-php-ext-install pdo_mysql \
         && docker-php-ext-install opcache
 
-RUN pecl install imagick-beta && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini
+RUN pecl install imagick && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini
 RUN pecl install mongodb && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 # PHP config
