@@ -1,4 +1,4 @@
-FROM php:rc-fpm
+FROM php:fpm
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
