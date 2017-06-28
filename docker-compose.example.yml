@@ -44,6 +44,8 @@ services:
       environment:
         REDIS_PORT: 6379
         REDIS_PASSWORD: secret
+      volumes:
+        - ./data/redis:/data
 
   mongo:
       build: ./mongo

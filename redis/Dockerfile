@@ -12,4 +12,5 @@ EXPOSE $REDIS_PORT
 CMD redis-server \
     --port $REDIS_PORT \
     --requirepass $REDIS_PASSWORD \
-    --protected-mode no
+    --protected-mode no \
+    --appendonly yes
