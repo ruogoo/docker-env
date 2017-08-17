@@ -55,3 +55,14 @@ services:
         MONGO_PORT: 27017
       volumes:
         - ./data/mongodb:/docker/data/db
+
+  elasticsearch:
+    build: ./elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./data/esdata:/usr/share/elasticsearch/data:rw
+    environment:
+      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
+    user: elasticsearch
