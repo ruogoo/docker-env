@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:alpine
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
@@ -6,7 +6,7 @@ MAINTAINER HyanCat <hyancat@live.cn>
 ADD nginx.conf /etc/nginx/nginx.conf
 
 # User Permission
-RUN useradd -M -s /usr/sbin/nologin docker
+RUN adduser -s /usr/sbin/nologin -D -H docker
 
 RUN mkdir /docker && mkdir /docker/app
 RUN echo "<h1>Hello Docker !</h1>" > /docker/app/index.html

@@ -1,4 +1,4 @@
-FROM redis
+FROM redis:alpine
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
