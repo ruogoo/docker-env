@@ -1,23 +1,23 @@
-FROM php
+FROM php:alpine
 
 MAINTAINER HyanCat <hyancat@live.cn>
 
 # Prepare Env
-RUN apt-get update
-RUN apt-get install -y apt-transport-https
 
-ADD sources.list /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y \
+ADD repositories /etc/apk/repositories
+
+RUN set -xe; \
+        \
+        apk add --no-cache --virtual .fetch-deps \
         git \
-        libmemcached-dev \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        imagemagick \
-        libmagickwand-dev \
-        libssl-dev
-
-RUN apt-get autoremove -y && apt-get clean && rm -r /var/lib/apt/lists/*
+        linux-headers \
+        memcached-dev \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        imagemagick-dev \
+        openssl-dev \
+        $PHPIZE_DEPS
 
 # PHP config
 
@@ -25,24 +25,24 @@ ADD php.ini /usr/local/etc/php/php.ini
 
 # Install PHP extensions
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
         && docker-php-ext-install zip \
         && docker-php-ext-install gd \
         && docker-php-ext-install mbstring \
         && docker-php-ext-install pdo_mysql \
         && docker-php-ext-install opcache
 
-RUN pecl install imagick && docker-php-ext-enable imagick
-RUN pecl install mongodb && docker-php-ext-enable mongodb
-RUN pecl install swoole && docker-php-ext-enable swoole
-RUN pecl install inotify && docker-php-ext-enable inotify
+RUN pecl install imagick-3.4.3 && docker-php-ext-enable imagick
+RUN pecl install mongodb-1.3.4 && docker-php-ext-enable mongodb
+RUN pecl install swoole-2.0.10 && docker-php-ext-enable swoole
+RUN pecl install inotify-2.0.0 && docker-php-ext-enable inotify
+
+RUN apk del .fetch-deps
 
 # User Permission
 
-RUN useradd -M -s /usr/sbin/nologin docker
+RUN adduser -D -h /docker docker
 
-RUN mkdir /docker
-RUN chown -R docker.docker /docker
 WORKDIR /docker
 
 COPY helloworld.php /docker/
