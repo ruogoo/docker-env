@@ -5,23 +5,39 @@ services:
     build: ./nginx
     ports:
       - "80:80"
+      - "443:443"
     links:
       - "phpfpm"
+      - "swoole"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
       - ./data/log/nginx:/var/log/nginx
-      - /path/to/app:/docker/app
+      - /path/to/app:/docker/app:rw
 
   phpfpm:
-    build: ./php
+    build: ./phpfpm
     ports:
       - "9000:9000"
     links:
       - "mysql"
     volumes:
       - ./data/log/php:/var/log/php
-      - /path/to/app:/docker/app
+      - /path/to/app:/docker/app:rw
+
+  swoole:
+    build: ./swoole
+    ports:
+      - "1215:1215"
+      - "9501:9501"
+    links:
+      - "mysql"
+      - "redis"
+      - "memcached"
+      - "mongo"
+    volumes:
+      - /path/to/app:/docker/app:rw
+    command: php /docker/app/someproject/artisan swoole:http start
 
   mysql:
     build: ./mysql
@@ -55,15 +71,4 @@ services:
     environment:
       MONGO_PORT: 27017
     volumes:
-      - ./data/mongodb:/docker/data/db
-
-  elasticsearch:
-    build: ./elasticsearch
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    volumes:
-      - ./data/esdata:/usr/share/elasticsearch/data:rw
-    environment:
-      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
-    user: elasticsearch
+      - ./data/mongodb:/docker/data/mongodb
