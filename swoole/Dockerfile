@@ -8,16 +8,14 @@ ADD repositories /etc/apk/repositories
 
 RUN set -xe; \
         \
-        apk add --no-cache --virtual .fetch-deps \
+        apk add --no-cache \
         git \
-        linux-headers \
         memcached-dev \
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
         imagemagick-dev \
-        openssl-dev \
-        $PHPIZE_DEPS
+        openssl-dev
 
 # PHP config
 
@@ -32,12 +30,14 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
         && docker-php-ext-install pdo_mysql \
         && docker-php-ext-install opcache
 
+RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS linux-headers
+
 RUN pecl install imagick-3.4.3 && docker-php-ext-enable imagick
 RUN pecl install mongodb-1.3.4 && docker-php-ext-enable mongodb
 RUN pecl install swoole-2.0.10 && docker-php-ext-enable swoole
 RUN pecl install inotify-2.0.0 && docker-php-ext-enable inotify
 
-RUN apk del .fetch-deps
+RUN apk del .phpize-deps
 
 # User Permission
 
