@@ -21,6 +21,9 @@ services:
       - "9000:9000"
     links:
       - "mysql"
+      - "redis"
+      - "memcached"
+      - "mongo"
     volumes:
       - ./data/log/php:/var/log/php
       - /path/to/app:/docker/app:rw
