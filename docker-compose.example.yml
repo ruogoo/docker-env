@@ -33,6 +33,8 @@ services:
     ports:
       - "1215:1215"
       - "9501:9501"
+    environment:
+      SWOOLE_PORT: 1215
     links:
       - "mysql"
       - "redis"

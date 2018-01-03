@@ -47,7 +47,9 @@ WORKDIR /docker
 
 COPY helloworld.php /docker/
 
-EXPOSE 1215
+ENV SWOOLE_PORT
+EXPOSE $SWOOLE_PORT
+
 EXPOSE 9501
 VOLUME ["/docker"]
 
