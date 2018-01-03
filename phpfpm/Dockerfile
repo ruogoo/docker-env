@@ -34,8 +34,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 
 RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS linux-headers
 
-RUN pecl install imagick && docker-php-ext-enable imagick
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+RUN pecl install imagick-3.4.3 && docker-php-ext-enable imagick
+RUN pecl install mongodb-1.3.4 && docker-php-ext-enable mongodb
+RUN pecl install redis-3.1.6 && docker-php-ext-enable redis
 
 RUN apk del .phpize-deps
 
