@@ -15,6 +15,8 @@ RUN set -xe; \
         libjpeg-turbo-dev \
         libpng-dev \
         imagemagick-dev \
+        curl \
+        openssl \
         openssl-dev
 
 # PHP config
