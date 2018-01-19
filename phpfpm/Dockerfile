@@ -14,6 +14,10 @@ RUN set -xe; \
         freetype-dev \
         libjpeg-turbo-dev \
         libpng-dev \
+        jpeg-dev \
+        zlib-dev \
+        libxml2 \
+        imagemagick \
         imagemagick-dev \
         curl \
         openssl \
