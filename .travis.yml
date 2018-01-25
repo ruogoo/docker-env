@@ -1,0 +1,18 @@
+sudo: required
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+before_install:
+  - ./configure.sh
+
+script:
+  - docker --version
+  - docker-compose build
+  - docker-compose --verbose up -d
+  - ./test.sh
