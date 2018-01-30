@@ -32,6 +32,7 @@ services:
       - /path/to/app:/docker/app:rw
     networks:
       - ruogoo
+      - influx
 
   swoole:
     build: ./swoole
@@ -50,6 +51,7 @@ services:
     command: php /docker/app/someproject/artisan swoole:http start
     networks:
       - ruogoo
+      - influx
 
   mysql:
     build: ./mysql
@@ -93,8 +95,44 @@ services:
     networks:
       - ruogoo
 
+  influx:
+    image: influxdb:alpine
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+    environment:
+      INFLUXDB_ADMIN_ENABLED: "true"
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: secret
+    networks:
+      - influx
+
+  telegraf:
+    image: telegraf:alpine
+    links:
+      - influx
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    environment:
+      HOST_NAME: "telegraf"
+      INFLUXDB_HOST: "influx"
+      INFLUXDB_PORT: "8086"
+      DATABASE: "telegraf"
+    networks:
+      - influx
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "admin"
+      GF_SECURITY_ADMIN_PASSWORD: "secret"
+
 networks:
   ruogoo:
+    driver: "bridge"
+  influx:
     driver: "bridge"
 
 volumes:
