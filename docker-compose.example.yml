@@ -58,6 +58,7 @@ services:
     ports:
       - "3306:3306"
     environment:
+      MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - ./mysql/conf.d:/etc/mysql/conf.d
