@@ -1,6 +1,6 @@
-FROM php:alpine
+FROM php:7.2.8-alpine
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 # Prepare Env
 
@@ -17,11 +17,9 @@ RUN set -xe; \
         jpeg-dev \
         zlib-dev \
         libxml2 \
-        imagemagick \
-        imagemagick-dev \
+        imagemagick imagemagick-dev \
         curl \
-        openssl \
-        openssl-dev
+        openssl openssl-dev
 
 # PHP config
 
@@ -39,7 +37,6 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS linux-headers
 
 RUN pecl install imagick-3.4.3 && docker-php-ext-enable imagick
-RUN pecl install mongodb-1.3.4 && docker-php-ext-enable mongodb
 RUN pecl install redis-3.1.6 && docker-php-ext-enable redis
 RUN pecl install swoole-2.0.10 && docker-php-ext-enable swoole
 RUN pecl install inotify-2.0.0 && docker-php-ext-enable inotify

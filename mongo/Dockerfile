@@ -1,6 +1,6 @@
 FROM mongo
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 ENV MONGO_PORT 27017
 

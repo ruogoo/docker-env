@@ -1,6 +1,6 @@
-FROM redis:alpine
+FROM redis:5-alpine
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 # default port 6379, it should be changed to anthor port.
 ENV REDIS_PORT 6379

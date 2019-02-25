@@ -1,6 +1,6 @@
 FROM mysql:5.7
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 # Write Permission
 RUN usermod -u 1000 mysql && chown mysql.mysql /var/run/mysqld/

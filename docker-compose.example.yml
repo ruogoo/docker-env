@@ -6,52 +6,14 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    links:
-      - "phpfpm"
-      - "swoole"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/ssl:/etc/nginx/ssl
-      - ./data/log/nginx:/var/log/nginx
+      - ./data/logs/nginx:/var/logs/nginx
       - /path/to/app:/docker/app:rw
     networks:
       - default
       - ruogoo
-
-  phpfpm:
-    build: ./phpfpm
-    ports:
-      - "9000:9000"
-    links:
-      - "mysql"
-      - "redis"
-      - "memcached"
-      - "mongo"
-    volumes:
-      - ./data/log/php:/var/log/php
-      - /path/to/app:/docker/app:rw
-    networks:
-      - ruogoo
-      - influx
-
-  swoole:
-    build: ./swoole
-    ports:
-      - "1215:1215"
-      - "9501:9501"
-    environment:
-      SWOOLE_PORT: 1215
-    links:
-      - "mysql"
-      - "redis"
-      - "memcached"
-      - "mongo"
-    volumes:
-      - /path/to/app:/docker/app:rw
-    command: php /docker/app/someproject/artisan swoole:http start
-    networks:
-      - ruogoo
-      - influx
 
   mysql:
     build: ./mysql
@@ -96,52 +58,6 @@ services:
     networks:
       - ruogoo
 
-  influx:
-    image: influxdb:alpine
-    ports:
-      - "8086:8086"
-      - "8083:8083"
-    environment:
-      INFLUXDB_ADMIN_ENABLED: "true"
-      INFLUXDB_ADMIN_USER: admin
-      INFLUXDB_ADMIN_PASSWORD: secret
-    networks:
-      - influx
-
-  telegraf:
-    image: telegraf:alpine
-    links:
-      - influx
-    volumes:
-      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    environment:
-      HOST_NAME: "telegraf"
-      INFLUXDB_HOST: "influx"
-      INFLUXDB_PORT: "8086"
-      DATABASE: "telegraf"
-    networks:
-      - influx
-
-  grafana:
-    image: grafana/grafana
-    ports:
-      - "3000:3000"
-    environment:
-      GF_SECURITY_ADMIN_USER: "admin"
-      GF_SECURITY_ADMIN_PASSWORD: "secret"
-
 networks:
   ruogoo:
     driver: "bridge"
-  influx:
-    driver: "bridge"
-
-volumes:
-  v_redis:
-    driver: "local"
-  v_mysql:
-    driver: "local"
-  v_log_nginx:
-    driver: "local"
-  v_log_php:
-    driver: "local"

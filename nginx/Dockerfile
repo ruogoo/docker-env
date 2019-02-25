@@ -1,6 +1,6 @@
-FROM nginx:alpine
+FROM nginx:1.15-alpine
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 # Nginx Config
 ADD nginx.conf /etc/nginx/nginx.conf

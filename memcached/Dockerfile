@@ -1,5 +1,5 @@
 FROM memcached:alpine
 
-MAINTAINER HyanCat <hyancat@live.cn>
+LABEL maintainer="hyancat.cn@gmail.com"
 
 EXPOSE 11211

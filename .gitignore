@@ -1,4 +1,1 @@
 docker-compose.yml
-nginx.conf
-php.ini
-php-fpm.conf
