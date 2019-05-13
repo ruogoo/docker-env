@@ -1,6 +1,8 @@
-#!/bin/bash -l
+#!/bin/sh
 
-DATA_DIR=`pwd`/data/backup
+DIR=`dirname $0`
+DATA_DIR=$DIR/data/backup
+DOCKER_COMPOSE=/usr/local/bin/docker-compose
 
 function log() {
     echo "[`date +"%Y-%m-%d %H:%m:%S"`] ==== $1"
@@ -19,24 +21,24 @@ function clean_mysql_dump() {
 
 ## Backup mysql database
 function mysql_dump() {
-    local CONTAINER_NAME=`docker-compose ps | grep mysql | awk '{print $1}'`
+    local CONTAINER_ID=`cd $DIR && $DOCKER_COMPOSE ps -q mysql`
     local MYSQL_USER=root
-    local MYSQL_PASSWORD=`cat docker-compose.yml | grep MYSQL_ROOT_PASSWORD | awk '{print $2}'`
-    local MYSQL_PORT=`cat docker-compose.yml | grep MYSQL_PORT | awk '{print $2}'`
+    local MYSQL_PASSWORD=`cat $DIR/docker-compose.yml | grep MYSQL_ROOT_PASSWORD | awk '{print $2}'`
+    local MYSQL_PORT=`cat $DIR/docker-compose.yml | grep MYSQL_PORT | awk '{print $2}'`
     local TIME=`date +"%Y%m%d_%H_%M_%S"`
 
     log "开始新备份"
 
-    docker exec -it $CONTAINER_NAME \
+    # Must not with '-it' for cron.
+    docker exec $CONTAINER_ID \
         /usr/bin/mysqldump \
         -u$MYSQL_USER \
         -p$MYSQL_PASSWORD \
-        -PMYSQL_PORT \
+        -P$MYSQL_PORT \
         --all-databases \
         > $DATA_DIR/mysql_dump_$TIME.sql
 
-    echo $DATA_DIR/mysql_dump_$TIME.sql
-    log "完成新备份"
+    log "完成新备份 $DATA_DIR/mysql_dump_$TIME.sql"
 }
 
 clean_mysql_dump
