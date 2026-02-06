@@ -1,4 +1,4 @@
-FROM redis:5-alpine
+FROM redis:alpine
 
 LABEL maintainer="hyancat.cn@gmail.com"
 
@@ -13,4 +13,8 @@ CMD redis-server \
     --port $REDIS_PORT \
     --requirepass $REDIS_PASSWORD \
     --protected-mode no \
-    --appendonly yes
+    --appendonly yes \
+    --auto-aof-rewrite-percentage 100 \
+    --auto-aof-rewrite-min-size 128mb \
+    --maxmemory 512mb \
+    --maxmemory-policy allkeys-lru

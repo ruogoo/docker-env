@@ -10,6 +10,7 @@ All the services include:
 - Memcached
 - Redis
 - MongoDB
+- Swoole
 
 ## Usage
 
@@ -18,6 +19,8 @@ All the services include:
         ./configure.sh
 
 2. Change the configure files if you want.
+
+    The default `docker-compose.yml` includes core services. You can add other services (like Swoole) from the specific directories as needed.
 
 3. Run
 
